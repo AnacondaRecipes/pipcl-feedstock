@@ -1,7 +1,7 @@
 schema_version: 1
 
 context:
-  version: 10
+  version: "12"
 
 package:
   name: pipcl
@@ -9,7 +9,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/p/pipcl/pipcl-${{ version }}.tar.gz
-  sha256: 4cbe80b570e5c842411c1db2d9c4038582eae7818b8baa73f22bf023535f199f
+  sha256: c7545480cfa808500d8b606da73db7f89a872258bcdb293716126e2ccff1a5c6
 
 build:
   number: 0
@@ -42,4 +42,4 @@ about:
 
 extra:
   recipe-maintainers:
-    - soapy1 
+    - soapy1
