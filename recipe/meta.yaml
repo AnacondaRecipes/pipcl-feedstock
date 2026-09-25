@@ -21,7 +21,12 @@ requirements:
   run:
     - python
 
+# Numerous network errors, related to `pip`, `flake`, `git` execution in conda environment
 {% set deselected_tests = " --deselect=tests/test_change_versions.py::test_change_versions" %}
+{% set deselected_tests = deselected_tests + " --deselect=tests/test_doctest.py::test_doctest_al" %}
+{% set deselected_tests = deselected_tests + " --deselect=tests/test_lint.py::test_codespell" %}
+{% set deselected_tests = deselected_tests + " --deselect=tests/test_lint.py::test_flake8" %}
+{% set deselected_tests = deselected_tests + " --deselect=tests/test_project.py::test_project" %}
 
 test:
   source_files:
@@ -34,10 +39,10 @@ test:
     - pipcl
   commands:
     - pip check
-    - pytest -vv tests
+    - pytest -vv tests {{ deselected_tests }}
 
 about:
-  homepage: https://pypi.org/project/pipcl/
+  home: https://github.com/ArtifexSoftware/pipcl
   license: AGPL-3.0-only
   license_file: COPYING
   license_family: AGPL
