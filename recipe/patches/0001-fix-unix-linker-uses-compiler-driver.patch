@@ -1,0 +1,26 @@
+From a1f59eb0803e12d89aceed2da4d0e9ff41eecd27 Mon Sep 17 00:00:00 2001
+From: Andrey Vetroumov <avetroumov@anaconda.com>
+Date: Fri, 25 Sep 2026 09:24:12 +0000
+Subject: [PATCH] fix unix linker uses compiler driver
+
+---
+ src/pipcl.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/pipcl.py b/src/pipcl.py
+index 63cc8d3..8427d2d 100644
+--- a/src/pipcl.py
++++ b/src/pipcl.py
+@@ -2504,7 +2504,8 @@ def linker_command(
+         if optimise:
+             general_flags += ' -O2 -DNDEBUG'
+         py_limited_api3 = f'-DPy_LIMITED_API={py_limited_api2}' if py_limited_api2 else ''
+-        
++
++        linker_command, _ = base_compiler(cpp=cpp)
+         # Fun fact - on Linux, if the -L and -l options are before '{path_cpp}'
+         # they seem to be ignored...
+         #
+-- 
+2.43.0
+

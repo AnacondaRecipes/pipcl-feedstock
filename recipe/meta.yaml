@@ -8,6 +8,9 @@ package:
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 286aba9785463c83659a565210a82a77896195d3303bff0542e825479b56daf2
+  patches:
+    # Use compiler driver ($CXX/$CC) for linking, not raw $LD — it can't parse -D/-Wl, flags.
+    - patches/0001-fix-unix-linker-uses-compiler-driver.patch
 
 build:
   number: 0
