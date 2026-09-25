@@ -1,0 +1,51 @@
+{% set name = "pipcl" %}
+{% set version = "13" %}
+
+package:
+  name: {{ name }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 286aba9785463c83659a565210a82a77896195d3303bff0542e825479b56daf2
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+
+requirements:
+  host:
+    - python
+    - pip
+    - packaging
+  run:
+    - python
+
+{% set deselected_tests = " --deselect=tests/test_change_versions.py::test_change_versions" %}
+
+test:
+  source_files:
+    - tests
+  requires:
+    - python
+    - pip
+    - pytest
+  imports:
+    - pipcl
+  commands:
+    - pip check
+    - pytest -vv tests
+
+about:
+  homepage: https://pypi.org/project/pipcl/
+  license: AGPL-3.0-only
+  license_file: COPYING
+  license_family: AGPL
+  summary: Python packaging operations, including PEP-517 support, for use by a setup.py script.
+  description: Python packaging operations, including PEP-517 support, for use by a setup.py script.
+  doc_url: https://github.com/ArtifexSoftware/pipcl/blob/v13/README.rst
+  dev_url: https://github.com/ArtifexSoftware/pipcl
+
+extra:
+  recipe-maintainers:
+    - soapy1
