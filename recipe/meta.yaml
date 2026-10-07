@@ -15,7 +15,7 @@ source:
     - patches/0002-fix-windows-build-tools-support.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
