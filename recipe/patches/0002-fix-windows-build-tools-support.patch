@@ -1,0 +1,46 @@
+From 02815773a65204103e632ed999111f60a0fb54d1 Mon Sep 17 00:00:00 2001
+From: Andrey Vetroumov <avetroumov@anaconda.com>
+Date: Wed, 7 Oct 2026 09:40:20 +0000
+Subject: [PATCH] fix windows build tools support
+
+---
+ src/wdev.py | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/src/wdev.py b/src/wdev.py
+index ca60957..da1c4a4 100644
+--- a/src/wdev.py
++++ b/src/wdev.py
+@@ -77,7 +77,9 @@ class WindowsVS:
+             # Find `devenv`.
+             #
+             devenv = f'{directory}\\Common7\\IDE\\devenv.com'
+-            assert os.path.isfile( devenv), f'Does not exist: {devenv}'
++            #assert os.path.isfile( devenv), f'Does not exist: {devenv}'
++            if not os.path.isfile(devenv):
++                devenv = None
+ 
+             # Find vcvars.bat.
+             #
+@@ -371,7 +373,8 @@ def windows_vs_multiple(*, year=None, vsversion=None, grade=None, version=None,
+         vsversion = pipcl.version_to_tuple(vsversion)
+         year = vsversion_to_year(vsversion, check=1)
+     
+-    vss_json = pipcl.run(rf'"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -format json', capture=1)
++    #vss_json = pipcl.run(rf'"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -format json', capture=1)
++    vss_json = pipcl.run(rf'"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -format json -products *', capture=1)
+     vss = json.loads(vss_json)
+     #pipcl.log(f'vss:\n{json.dumps(vss, indent="    ")}')
+     
+@@ -416,7 +419,7 @@ def windows_vs(*, year=None, grade=None, version=None, directory=None, cpu=None,
+         else:
+             return None
+     def key(wvs):
+-        grades = ['Community', 'Professional', 'Enterprise']
++        grades = ['BuildTools', 'Community', 'Professional', 'Enterprise']
+         return (
+                 pipcl.version_to_tuple(wvs.version),
+                 grades.index(wvs.grade),
+-- 
+2.43.0
+

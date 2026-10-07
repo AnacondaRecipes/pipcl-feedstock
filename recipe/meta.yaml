@@ -11,6 +11,7 @@ source:
   patches:
     # Use compiler driver ($CXX/$CC) for linking, not raw $LD — it can't parse -D/-Wl, flags.
     - patches/0001-fix-unix-linker-uses-compiler-driver.patch
+    - patches/0002-fix-windows-build-tools-support.patch  # [win]
 
 build:
   number: 0
