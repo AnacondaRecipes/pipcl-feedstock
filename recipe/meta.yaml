@@ -11,9 +11,11 @@ source:
   patches:
     # Use compiler driver ($CXX/$CC) for linking, not raw $LD — it can't parse -D/-Wl, flags.
     - patches/0001-fix-unix-linker-uses-compiler-driver.patch
+    # Windows: support VS Build Tools (no devenv.com, grade not in vswhere's default SKU list / sort key)
+    - patches/0002-fix-windows-build-tools-support.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
